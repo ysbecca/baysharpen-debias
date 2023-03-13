@@ -30,7 +30,7 @@ All configs YAML files are under ```configs/``` and any hyperparameters not spec
 
 ## Checkpoints
 
-Checkpoints for the Bayesian posterior estimates for models on the three datasets are included in ```moments/```.
+Checkpoints for the Bayesian posterior estimates for models on the three datasets are included in ```moments/```. These include all $\theta_m$ in $\Theta$ and predictions on all test subsets.
 
 ## Environment
 
