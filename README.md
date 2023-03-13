@@ -30,7 +30,17 @@ All configs YAML files are under ```configs/``` and any hyperparameters not spec
 
 ## Checkpoints
 
-Checkpoints for the Bayesian posterior estimates for models on the three datasets are included in ```moments/```. These include all $\theta_m$ in $\Theta$ and predictions on all test subsets.
+Checkpoints for the Bayesian posterior estimates for Bayesian baseline models on the three datasets are included in ```moments/```. These include all $\theta_m$ in $\Theta$ and predictions on all test subsets.
+
+Checkpoints for final sharpened posterior models are also included.
+
+## Evaluation
+
+To evaluate and generate predictions for the sharpened BayResNet+Sharpen, run:
+
+```python train.py --config_name eval --task_id DATASET_TASK_ID```
+
+where ```DATASET_TASK_ID``` is 0 (Biased MNIST), 1 (COCO-on-Places), or 2 (BAR).
 
 ## Environment
 
