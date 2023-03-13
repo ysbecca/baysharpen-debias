@@ -1,0 +1,12 @@
+---
+0:
+  model_code: "resnet"
+  lit_code: "sharpen"
+  dataset_code: "cocoplaces"
+  optim: "sgd"
+  moments: 5
+  batch_size: 32
+  max_epochs: 14
+  lr: 0.01
+  moment_desc: "baycocoplaces-baseline"
+  model_desc: "coco-sharpen"

@@ -1,0 +1,20 @@
+---
+# TODO eval all sharpened models here from moments.
+0:
+  model_code: "resnet"
+  dataset_code: "bmnist"
+  moments: 5
+  max_epochs: 0
+  model_desc: "sharpened-bmnist"
+1:
+  model_code: "resnet"
+  dataset_code: "cocoplaces"
+  moments: 5
+  max_epochs: 0
+  model_desc: "sharpened-coco"
+2: 
+  model_code: "resnet"
+  dataset_code: "bar"
+  moments: 10
+  max_epochs: 0
+  model_desc: "sharpened-bar"
