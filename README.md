@@ -54,4 +54,4 @@ To be included after review period.
 
 ## Acknowledgements
 
-We would like to acknowledge the respective authors for their publicly available code for [cSG-MCMC](https://github.com/ruqizhang/csgmcmc), [network dissection](https://github.com/davidbau/dissect), and [OccamNets](https://github.com/erobic/occam-nets-v1) whose code has been partially used and modified for this work.
+We would like to acknowledge the respective authors for their publicly available code for [cSG-MCMC](https://github.com/ruqizhang/csgmcmc), [network dissection](https://github.com/davidbau/dissect), [PCGrad](https://github.com/WeiChengTseng/Pytorch-PCGrad), [OccamNets](https://github.com/erobic/occam-nets-v1) whose code has been partially used and modified for this work.
