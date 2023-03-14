@@ -9,8 +9,8 @@ from global_config import *
 def save_outputs(preds, epis, model_desc, extra=""):
     """ Saves predictions and epistemic uncertainites in numpy arrays. """
 
-    np.save(f"{MOMENTS_DIR}{model_desc}/preds{char}{extra}.npy", np.argmax(preds.detach().cpu(), axis=1))
-    np.save(f"{MOMENTS_DIR}{model_desc}/epis{char}{extra}.npy", np.array(epis.detach().cpu()))
+    np.save(f"{MOMENTS_DIR}{model_desc}/preds{extra}.npy", np.argmax(preds.detach().cpu(), axis=1))
+    np.save(f"{MOMENTS_DIR}{model_desc}/epis{extra}.npy", np.array(epis.detach().cpu()))
 
 
 
