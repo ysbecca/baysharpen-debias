@@ -8,6 +8,8 @@ This code assumes additional directories in default locations:
 - ```tb_logs/```: Tensorboard log directory
 - ```data/```: datasets
 
+Set the path directories in ```local_config.py```.
+
 All default configurations, paths, and parameters can be changed in ```global_config.py```.
 
 ## Datasets
