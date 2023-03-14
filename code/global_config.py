@@ -205,3 +205,17 @@ DEFAULT_CYCLES 			= 4
 DEFAULT_RESULT_FILE 	= RESULTS_DIR + "results.txt"
 
 GPU_COUNT 				= 0 if IS_LOCAL else 1
+
+
+
+#######################################################
+#             Mappings
+#######################################################
+
+DATAMODULE_MAP = {
+	IMAGENET_CODE: "DataModuleImageNet",
+	SYNBOLS_CODE: "DataModuleSpuriousSynbols",
+	BMNIST_CODE: "DataModuleBiasedMNIST",
+	COCO_PLACES_CODE: "DataModuleCocoPlaces",
+	BAR_CODE: "DataModuleBAR",
+}

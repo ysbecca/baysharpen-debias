@@ -2,10 +2,7 @@ import pytorch_lightning as pl
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 
-# for older PyTorch versions....
-from .imagenet import ImageNet
-# newer versions
-# from torchvision.datasets import ImageNet
+
 
 import numpy as np
 import pandas as pd

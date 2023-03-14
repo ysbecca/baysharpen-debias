@@ -34,6 +34,7 @@ from litmodels.litsgmcmc import *
 from litmodels.litdetcnn import *
 from litmodels.sharpen import *
 
+from predict import *
 from utils import *
 from global_config import *
 
@@ -214,49 +215,22 @@ logger = TensorBoardLogger(TB_LOGS_PATH, name=model_desc)
 
 batch_size = args.batch_size*args.num_gpus if args.num_gpus else args.batch_size
 
-# TODO replace this by DataModule Factory
-if args.dataset_code == IMAGENET_CODE:
-    data_module = DataModuleImageNet(
-        batch_size=batch_size,
-        small_imagenet=args.small_imagenet,
-    )
-elif args.dataset_code == SYNBOLS_CODE:
-    data_module = DataModuleSpuriousSynbols(
-        batch_size=batch_size,
-        args=args,
-        seg_mode=False,
-    )
-elif args.dataset_code == BMNIST_CODE:
-    data_module = DataModuleBiasedMNIST(
-        batch_size=batch_size,
-        args=args,
-    )
-elif args.dataset_code == COCO_PLACES_CODE:
-    data_module = DataModuleCocoPlaces(
-        batch_size=batch_size,
-        args=args,
-    )
-elif args.dataset_code == IMAGENET100_CODE:
-    data_module = DataModuleImageNet(
-        batch_size=batch_size,
-        small_imagenet=args.small_imagenet,
-        subset100=True,
-    )
-elif args.dataset_code == BAR_CODE:
-    data_module = DataModuleBAR(
-        batch_size=batch_size,
-        args=args,
-    )
+if DATAMODULE_MAP[args.dataset_code]:
+    data_module = eval(DATAMODULE_MAP[args.dataset_code])(
+            batch_size=batch_size,
+            args=args
+        )
+
+    print(data_module)
 else:
-    print("[ERR]: no recognised data code", args.dataset_code)
+    print(f"[ERR] dataset_code not recognized: {args.dataset_code}")
     exit()
 
 
-# force setup so we can compute number of batches
+# manual setup so we can compute number of batches
 data_module.setup()
 num_batches = len(data_module.train_set) / batch_size + 1
 iterations = num_batches * args.max_epochs
-
 
 
 ########################################################################
@@ -358,81 +332,13 @@ elif (args.lit_code == SHARPEN_CODE):
 #
 ########################################################################
 
-def save_outputs(preds, epis, extra=""):
-    # to avoid overriding stuff accidentally
-    char = "_dev" if args.dev_run else ""
-
-    # save model preds and uncertainties
-    np.save(f"{MOMENTS_DIR}{model_desc}/preds{char}{extra}.npy", np.argmax(preds.detach().cpu(), axis=1))
-    np.save(f"{MOMENTS_DIR}{model_desc}/epis{char}{extra}.npy", np.array(epis.detach().cpu()))
-
-def save_acc(descriptor, iou_overlap, results_file, acc):
-    with open(f"{MOMENTS_DIR}{args.model_desc}/{results_file}.csv", 'a') as f:
-        writer = csv.writer(f)
-        writer.writerow([descriptor, round(iou_overlap, 3), round(acc, 3)])
-
-def predict_dataset(data_module, model, trainer, loaders):
-    data_module.batch_size = PREDICT_BATCH_SIZE[args.dataset_code]
-    cut = data_module.batch_size if args.dev_run else None
-
-    accs = {}
-
-    keys = data_module.keys
-    keys.remove('train')
-
-    if args.lit_code == DET_CODE:
-         for key in keys:
-            preds = trainer.predict(model, loaders[key])
-            preds = torch.stack(preds)
-            preds = torch.flatten(preds, start_dim=0, end_dim=1)
-            acc = model.accuracy(torch.Tensor(preds), torch.Tensor(targets[key]))
-            accs[key] = round(acc, 4)
-    else:
-
-        if not model.moment:
-            model.moment = args.moments
-        if model.moment:
-            preds, epis, accs = model.predict_custom()
-
-            if args.dataset_code == BMNIST_CODE:
-                indices = data_module.test_set.get_indices(BMNIST_BIAS_VARS)
-                
-                test_targets = model.targets['test']
-
-                print("Maj/min breakdown accuracies:")
-                print(model.manual_device)
-                for bias_var in BMNIST_BIAS_VARS:
-
-                    maj_min_accs = []
-
-                    for split in ['_maj', '_min']:
-                        split_preds = torch.Tensor(preds['test'][indices[bias_var + split]])
-                        split_targets = torch.Tensor(test_targets[indices[bias_var + split]]).to(model.manual_device)
-
-                        # print(split_preds.shape)
-                        # print(split_targets.shape)
-                        split_acc = model.accuracy(
-                            split_preds,
-                            split_targets
-                        )
-                        maj_min_accs.append(split_acc)
-
-                    print(f"   {bias_var} maj/min {round(maj_min_accs[0], 4)}/{round(maj_min_accs[1], 4)}")
-
-            if not args.dev_run:
-                for key in keys:
-                    save_outputs(preds[key], epis[key], extra=f"_{key}")
-
-    if len(accs):
-        print("Accuracies: ")
-        print("-"*40)
-        for key in keys:
-            print(f"   {key} set {round(accs[key], 4)}%")
-
-
-predict_dataset(data_module, model, trainer, loaders)
-
-
+predict_dataset(
+    data_module,
+    model,
+    trainer, 
+    loaders,
+    args
+)
 
 print("*"*50)
 print(f"Finished with model with desc: {model_desc:>20}")
