@@ -6,7 +6,7 @@ from global_config import *
 
 
 
-def save_outputs(preds, epis, extra=""):
+def save_outputs(preds, epis, model_desc, extra=""):
     """ Saves predictions and epistemic uncertainites in numpy arrays. """
 
     np.save(f"{MOMENTS_DIR}{model_desc}/preds{char}{extra}.npy", np.argmax(preds.detach().cpu(), axis=1))
@@ -14,7 +14,7 @@ def save_outputs(preds, epis, extra=""):
 
 
 
-def predict_dataset(data_module, model, trainer, loaders, args):
+def predict_dataset(data_module, model, trainer, loaders, args, model_desc):
     """ Generates predictions and computes accuracy on all test sets for
         a given data module.
     """
@@ -66,7 +66,7 @@ def predict_dataset(data_module, model, trainer, loaders, args):
 
             if not args.dev_run:
                 for key in keys:
-                    save_outputs(preds[key], epis[key], extra=f"_{key}")
+                    save_outputs(preds[key], epis[key], model_desc, extra=f"_{key}")
 
     if len(accs):
         print("Accuracies: ")

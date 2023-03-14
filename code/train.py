@@ -335,7 +335,8 @@ predict_dataset(
     model,
     trainer, 
     loaders,
-    args
+    args,
+    model_desc
 )
 
 print("*"*50)
