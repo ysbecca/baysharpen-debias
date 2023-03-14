@@ -14,7 +14,7 @@ All default configurations, paths, and parameters can be changed in ```global_co
 
 ## Datasets
 
-Links to download datasets are below:
+Links to download datasets:
 
 + [Biased MNIST](https://github.com/erobic/occam-nets-v1)
 + [COCO-on-Places](https://github.com/Faruk-Ahmed/predictive_group_invariance)
@@ -22,11 +22,29 @@ Links to download datasets are below:
 
 ## Training
 
-Run scripts ```sharpen-bmnist.sh```, ```sharpen-coco.sh```, and ```sharpen-bar.sh``` to obtain sharpening results reported in the paper.
+The repository includes checkpoints for baseline Bayesian ResNet18 models trained on the three datasets. Run scripts ```sharpen-bmnist.sh```, ```sharpen-coco.sh```, and ```sharpen-bar.sh``` to obtain sharpening results reported in the paper.
 
-Alterately, to change parameters, you can run the ```train.py``` Python script directly on the command line:
+Alternately, to modify parameters, you can run the ```train.py``` Python script directly on the command line:
 
-```python train.py --config_name baybar --task_id 10 --model_desc bar-sharpen-test```
+```
+usage: train.py [-h] [--task_id TASK_ID] [--config_name CONFIG_NAME]
+                [--dataset_code DATASET_CODE] [--lit_code LIT_CODE]
+                [--model_code MODEL_CODE] [--model_desc MODEL_DESC]
+                [--ckpt CKPT] [--optim_code OPTIM_CODE]
+                [--max_epochs MAX_EPOCHS] [--batch_size BATCH_SIZE]
+                [--momentum MOMENTUM] [--lr LR] [--result_file RESULT_FILE]
+                [--cycle_length CYCLE_LENGTH] [--num_gpus NUM_GPUS]
+                [--dev_run DEV_RUN] [--use_vw_flag_coco USE_VW_FLAG_COCO]
+                [--bmnist_size BMNIST_SIZE] [--small_imagenet SMALL_IMAGENET]
+                [--pretrained PRETRAINED] [--keep_fc KEEP_FC] [--alpha ALPHA]
+                [--epiwt EPIWT] [--kappa KAPPA] [--moments MOMENTS]
+                [--temperature TEMPERATURE] [--cycles CYCLES]
+                [--models_per_cycle MODELS_PER_CYCLE] [--bg_mode BG_MODE]
+                [--spurious_mode SPURIOUS_MODE]
+                [--spurious_ratio SPURIOUS_RATIO] [--sf_size SF_SIZE]
+                [--loss_type LOSS_TYPE] [--loss_scalar LOSS_SCALAR] 
+                [--moment_desc MOMENT_DESC]
+```
 
 All configs YAML files are under ```configs/``` and any hyperparameters not specified there assume default values specified in ```global_config.py``` or provided on command line as arg variables.
 
