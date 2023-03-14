@@ -269,13 +269,14 @@ class Sharpen():
 
             self.log_epis_accs(tb_writer, epis, accs, epoch=e)
 
-            # which of these are important to see?
-            keys_to_vis = list(self.loaders.keys() - 'train')
-            cams = self.generate_visualisation(keys_to_vis, init_epis, mean_preds)
 
+            # Generate Grad-CAM visualisations of high uncertainty images
+            # during training
+            # keys_to_vis = list(self.loaders.keys() - 'train')
+            # cams = self.generate_visualisation(keys_to_vis, init_epis, mean_preds)
             # display these images on the board under their epoch number
-            for key in self.loaders.keys():
-                tb_writer.add_images(f"{key}", cams[key], global_step=e, dataformats="NHWC")
+            # for key in self.loaders.keys():
+                # tb_writer.add_images(f"{key}", cams[key], global_step=e, dataformats="NHWC")
 
             for model_idx, m in enumerate(self.models):
                 if self.args.num_gpus > 1:

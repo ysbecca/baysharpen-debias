@@ -220,8 +220,6 @@ if DATAMODULE_MAP[args.dataset_code]:
             batch_size=batch_size,
             args=args
         )
-
-    print(data_module)
 else:
     print(f"[ERR] dataset_code not recognized: {args.dataset_code}")
     exit()
