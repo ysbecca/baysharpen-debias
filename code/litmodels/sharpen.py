@@ -79,8 +79,6 @@ class Sharpen():
         print(f"[INFO] Total moments to load: {self.args.moments}")
         for m in range(self.args.moments):
 
-            # load other models too.... TODO 
-            
             if self.args.dataset_code == COCO_PLACES_CODE and (not self.args.use_vw_flag_coco):
                 model = ResNet18(
                     self.args.dataset_code,

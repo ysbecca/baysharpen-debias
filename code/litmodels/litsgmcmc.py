@@ -120,8 +120,7 @@ class LitSGMCMC(pl.LightningModule):
                     )
 
                     if self.args.pretrained:
-                        print("getting checkpoint...")
-
+                        # load checkpoint for pre-trained BAR on ImageNet100
                         ckpt = torch.load(CKPTS[self.args.dataset_code])
                         weights = ckpt['state_dict']
                         new_weights = dict()
@@ -135,9 +134,6 @@ class LitSGMCMC(pl.LightningModule):
                             new_weights['fc.bias'] = torch.Tensor((6))
 
                         model.load_state_dict(new_weights)
-                        del ckpt
-
-
 
             elif self.args.model_code == RESNET34_CODE:
                 model = resnet34vw(num_classes=NUM_CLASSES[self.args.dataset_code])

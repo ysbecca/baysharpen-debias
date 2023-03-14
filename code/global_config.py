@@ -98,7 +98,6 @@ RESNET_CKPT_PTH   		= MOMENTS_DIR + "resnet-checkpoint/resnet18-f37072fd.pth"
 
 CKPTS = {
 	BAR_CODE: MOMENTS_DIR + "imnet100_resnet.ckpt",
-	BMNIST_CODE: MOMENTS_DIR + "bmnist_resnet.ckpt"
 }
 
 MTURKS_RESULTS 			= DATA_DIR + "discover_spurious_features.csv"
