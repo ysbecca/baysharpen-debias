@@ -1,6 +1,6 @@
 # baysharpen-debias
 
-Code for paper **"Implicit Visual Bias Mitigation by Posterior Estimate Sharpening of a Bayesian Neural Network"**
+Code relevant for work present in thesis "Visual bias mitigation driven by Bayesian uncertainties".
 
 ## Setup
 
